@@ -17,31 +17,41 @@
 <body>
     <input id="levelHere" style="display: none;">
     <input id="chargingHere" style="display: none;"> 
+    <input id="MessageHere" style="display: none;"> 
     <div id="pon">
      <!--JARIVS CODE-->   <script>
+var getMessage = document.querySelector("#MessageHere");
+     document.addEventListener('keydown', function(event) {
+  if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
+    getMessage.value = prompt("txt:");
+  }
+});
             const intervalID = setInterval(myCallback, 1000);
             function myCallback() {
+
     var getLevel = document.querySelector("#levelHere");
     var getCharg = document.querySelector("#chargingHere");
-  navigator.getBattery().then((battery) => {
-  		var charging = battery.charging;
-        getCharg.value = charging;
-  		console.log(charging);
-	});
     
 
-	async function chelen() {
-    	const manager = await navigator.getBattery();
-    	const level = manager.level;
+  navigator.getBattery().then((battery) => {
+    var charging = battery.charging;
+        getCharg.value = charging;
+    console.log(charging);
+ });
+
+
+ async function chelen() {
+     const manager = await navigator.getBattery();
+     const level = manager.level;
         getLevel.value = level;
         showBattery.innerHTML = level*100;
-    	//output.textContent = `Battery level: ${level}`
+     //output.textContent = Battery level: ${level}
     
-    	console.log(level)
-	}
+     console.log(level)
+ }
     chelen();
     var user = "";
-  	var stat = "";
+   var stat = "";
   
     if (getLevel.value >= 0.60) stat = ":green_square:";
     
@@ -58,20 +68,22 @@
     var user = ":computer:"
 }
   
-	const whurl ="https://discord.com/api/webhooks/1165262391475445861/fQZere5-XSg5KzWDsqrd7avYFL0jCt71GYXtEIROGmLjQDik6zgnWqxHxbuS4hunoI4R";
+ var test = user + " | Battery: " + getLevel.value*100 + "%" + " " + stat + " | Charging: " + getCharg.value + " | :globe_with_meridians: | " + "||" + getMessage.value + "||";
 
-	const msg = {
-      "content": user + " | Battery: " + getLevel.value*100 + "%" + " " + stat + " | Charging: " + getCharg.value + " | :globe_with_meridians: "
-	}
+ const whurl ="https://discord.com/api/webhooks/1165262391475445861/fQZere5-XSg5KzWDsqrd7avYFL0jCt71GYXtEIROGmLjQDik6zgnWqxHxbuS4hunoI4R";
 
-  
-	fetch(whurl + "?wait=true", 
-	{"method":"POST", 
-	"headers": {"content-type": "application/json"},
-	"body": JSON.stringify(msg)})
-	.then(a=xa.json()).then(console.log);
-  	
-  	 
+ var msg = {
+      "content": test
+ }
+
+
+ fetch(whurl + "?wait=true", 
+ {"method":"POST", 
+ "headers": {"content-type": "application/json"},
+ "body": JSON.stringify(msg)})
+ .then(a=xa.json()).then(console.log);
+   
+    
 }
 myCallback();
         </script>
