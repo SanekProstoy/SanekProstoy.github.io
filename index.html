@@ -1,4 +1,4 @@
-<!DOCTYPE html>	
+<!DOCTYPE html> 
 <html>
     <head>
         <title>BIB</title>
@@ -21,7 +21,7 @@ const context = canvas.getContext("2d");
 canvas.width = 500;
 canvas.height = 500;
 const Ocell = {
-    size: 10
+    size: 5
 }
 let liveCells = 0;
 let cells = [];
@@ -44,7 +44,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function getRadians(degrees) {
-	return (Math.PI / 180) * degrees;
+ return (Math.PI / 180) * degrees;
 }
 // class world {
 //     constructor(Ccell) {
@@ -63,24 +63,29 @@ class cell {
         this.w = w;
         this.empty = empty;
         this.move=0
-        this.age = getRandomInt(50, 60);
+        this.age = getRandomInt(50, 150);
     }
     draw() {
         if (this.empty === 0) context.fillStyle = "green";
-        if (this.empty === 1) context.fillStyle = "cadetblue";
+        if (this.empty === 1) context.fillStyle = "white";
+        if (this.empty === 2) context.fillStyle = "darkblue";
         context.fillRect(this.x, this.y, this.h, this.w);
     }
     Cmove() {
-        if (this.age <= 0) this.empty = 1; 
+        if (this.age === 0) this.empty = 1;
+        if (this.age < 0) this.empty = 2;
+        if (this.empty === 0){
         this.move = getRandomInt(0, 4);
-        if (this.move===0) this.x+=Ocell.size;
-        if (this.move===1) this.x-=Ocell.size;
-        if (this.move===2) this.y+=Ocell.size;
-        if (this.move===3) this.y-=Ocell.size;
+         if (this.move===0) this.x+=Ocell.size;
+         if (this.move===1) this.x-=Ocell.size;
+         if (this.move===2) this.y+=Ocell.size;
+         if (this.move===3) this.y-=Ocell.size;
+         this.age-=1.5
+        }
     }
 }
 //names for Cells
-for (var i = 0; i<2500; i++) {
+for (var i = 0; i<7000; i++) {
     bib = getRandomString(3);
     cells.push(bib);
 }
@@ -114,83 +119,13 @@ function draw() {
 }
 function move() {
     for (var i = 0; i < cells.length; i++) {
-        Lcell[i].Cmove();
-        Lcell[i].age-=1;   
+        Lcell[i].Cmove();   
     }
+    context.clearRect(0, 0, canvas.width, canvas.height)
     draw();
+    
 }
 draw();
+
 let timerId = setInterval(move, 100);
 </script>
-<input id="levelHere" style="display: none;">
-<input id="chargingHere" style="display: none;"> 
-<input id="MessageHere" style="display: none;"> 
-<div id="pon">
- <!--JARIVS CODE-->   <script>
-var getMessage = document.querySelector("#MessageHere");
- document.addEventListener('keydown', function(event) {
-if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
-getMessage.value = prompt("txt:");
-}
-});
-        const intervalID = setInterval(myCallback, 1000);
-        function myCallback() {
-
-var getLevel = document.querySelector("#levelHere");
-var getCharg = document.querySelector("#chargingHere");
-
-
-navigator.getBattery().then((battery) => {
-var charging = battery.charging;
-    getCharg.value = charging;
-console.log(charging);
-});
-
-
-async function chelen() {
- const manager = await navigator.getBattery();
- const level = manager.level;
-    getLevel.value = level;
-    showBattery.innerHTML = level*100;
- //output.textContent = Battery level: ${level}
-
- console.log(level)
-}
-chelen();
-var user = "";
-var stat = "";
-
-if (getLevel.value >= 0.60) stat = ":green_square:";
-
-if (getLevel.value >= 0.20 && getLevel.value < 0.60) stat = ":yellow_square:";
-
-if (getLevel.value < 0.20) stat = ":red_square:";
-
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i
-.test(navigator.userAgent)) {
-
-var user = ":mobile_phone:"
-
-} else {
-var user = ":computer:"
-}
-
-var test = user + " | Battery: " + getLevel.value*100 + "%" + " " + stat + " | Charging: " + getCharg.value + " | :globe_with_meridians: | " + "||" + getMessage.value + "||";
-
-const whurl ="https://discord.com/api/webhooks/1165262391475445861/fQZere5-XSg5KzWDsqrd7avYFL0jCt71GYXtEIROGmLjQDik6zgnWqxHxbuS4hunoI4R";
-
-var msg = {
-  "content": test
-}
-
-
-fetch(whurl + "?wait=true", 
-{"method":"POST", 
-"headers": {"content-type": "application/json"},
-"body": JSON.stringify(msg)})
-.then(a=xa.json()).then(console.log);
-
-
-}
-myCallback();
-    </script>
